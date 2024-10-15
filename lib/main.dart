@@ -1,7 +1,51 @@
 import 'package:flutter/material.dart';
+import 'blank_page.dart';
+import 'forgot_password.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+class User {
+  final String email;
+  final String password;
+
+  User({required this.email, required this.password});
+
+  User copyWith({String? email, String? password}) {
+    return User(email: email ?? this.email, password: password ?? this.password);
+  }
+}
+
+class LoginService {
+  final List<User> _users = [
+    // Add existing users here
+  ];
+
+  Future<bool> login(String email, String password) async {
+    await Future.delayed(const Duration(seconds: 1)); // Simulate a delay
+    return _users.any((user) => user.email == email && user.password == password);
+  }
+
+  Future<bool> register(String email, String password) async {
+    await Future.delayed(const Duration(seconds: 1)); // Simulate a delay
+    if (_users.any((user) => user.email == email)) {
+      return false; // Email already exists
+    }
+    _users.add(User(email: email, password: password));
+    return true; // Registration successful
+  }
+
+  Future<bool> resetPassword(String email, String newPassword) async {
+    await Future.delayed(const Duration(seconds: 1)); // Simulate a delay
+    for (var i = 0; i < _users.length; i++) {
+      if (_users[i].email == email) {
+        _users[i] = _users[i].copyWith(password: newPassword); // Update the password
+        return true;
+      }
+    }
+    return false; // Email not found
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -31,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _loginService = LoginService();
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
               Center(
                 child: Container(
-                  width: 400, // Set the maximum width to 400 pixels
+                  width: 400,
                   child: TextFormField(
                     controller: _passwordController,
                     obscureText: true,
@@ -109,16 +154,21 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    // Login logic here
-                    // For now, just print the email and password
-                    print('Email: ${_emailController.text}');
-                    print('Password: ${_passwordController.text}');
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MyHomePage()),
-                    );
+                    final email = _emailController.text;
+                    final password = _passwordController.text;
+                    final isLoggedIn = await _loginService.login(email, password);
+                    if (isLoggedIn) {
+                      ScaffoldMessenger.of(context ).showSnackBar(
+                        const SnackBar(content: Text('Login successful')),
+                      );
+                      // Navigate to the home page
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Login failed')),
+                      );
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -136,12 +186,30 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
-                  // Forgot password logic here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RegisterPage()),
+                  );
                 },
                 style: TextButton.styleFrom(
                 ),
                 child: const Text(
                   'Forgot Password?',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RegisterPage()),
+                  );
+                },
+                style: TextButton.styleFrom(
+                ),
+                child: const Text(
+                  'Don\'t have an account? Register',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
@@ -226,7 +294,12 @@ class MyHomePage extends StatelessWidget {
                 ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const BlankPage()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -242,6 +315,26 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
+
+// class BlankPage extends StatelessWidget {
+//   const BlankPage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Colors.blue,
+//         title: const Text('Blank Page'),
+//       ),
+//       body: Center(
+//         child: Text(
+//           'This is a blank page',
+//           style: TextStyle(fontSize: 24, color: Colors.blueAccent),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
