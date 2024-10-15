@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'blank_page.dart';
 import 'forgot_password.dart';
+import 'register_user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,10 @@ class User {
   User({required this.email, required this.password});
 
   User copyWith({String? email, String? password}) {
-    return User(email: email ?? this.email, password: password ?? this.password);
+    return User(
+      email: email ?? this.email,
+      password: password ?? this.password,
+    );
   }
 }
 
@@ -45,6 +49,17 @@ class LoginService {
       }
     }
     return false; // Email not found
+  }
+
+  Future<bool> changePassword(String email, String oldPassword, String newPassword) async {
+    await Future.delayed(const Duration(seconds: 1)); // Simulate a delay
+    for (var i = 0; i < _users.length; i++) {
+      if (_users[i].email == email && _users[i].password == oldPassword) {
+        _users[i] = _users[i].copyWith(password: newPassword); // Update the password
+        return true;
+      }
+    }
+    return false; // Email or old password not found
   }
 }
 
@@ -188,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const RegisterPage()),
+                    MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),
                   );
                 },
                 style: TextButton.styleFrom(
