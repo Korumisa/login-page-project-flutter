@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'main.dart'; // Ensure this imports your main page
-import 'menu.dart'; // Import the next page you want to navigate to
+import 'main.dart';
+import 'menu.dart';
 
 class History extends StatelessWidget {
   const History({super.key});
@@ -32,11 +32,106 @@ class History extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Text(
-          'Under Maintenance',
-          style: TextStyle(fontSize: 24, color: Colors.blueAccent),
-        ),
+      body: GridView.count(
+        crossAxisCount: 2,
+        children: [
+          Center(
+            child: Container(
+              height: 500, // Set a specific height for the card
+              child: Card(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset('assets/MM.jpg'),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Worldwide Company',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit....',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              height: 500, // Set a specific height for the card
+              child: Card(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset('assets/MM.jpg'),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Worldwide Company',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit....',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              height: 500, // Set a specific height for the card
+              child: Card(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset('assets/MM.jpg'),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Go National',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit....',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              height: 500, // Set a specific height for the card
+              child: Card(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset('assets/MM.jpg'),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Worldwide Company',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit....',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
