@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart'; // Ensure this imports your main page
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -8,7 +9,8 @@ class AboutPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: const Text('About Page'),
+        title: const Text('About Korumisa App'),
+        // Remove the leading property to hide the back button
       ),
       body: Center(
         child: Column(
@@ -24,20 +26,20 @@ class AboutPage extends StatelessWidget {
               style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 0, 0, 0)),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              ),
-              child: const Text(
-                'Back',
-                style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 255, 255, 255) ),
-              ),
-            ),
+            // const SizedBox(height: 20),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.pop(context);
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Colors.blueAccent,
+            //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            //   ),
+            //   child: const Text(
+            //     'Back',
+            //     style: TextStyle(fontSize: 18, color: Colors.white),
+            //   ),
+            // ),
           ],
         ),
       ),
