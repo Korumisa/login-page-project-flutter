@@ -275,7 +275,7 @@ class MyHomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const BlankPage()),
+                  MaterialPageRoute(builder: (context) => const History()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -293,26 +293,6 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
-
-// class BlankPage extends StatelessWidget {
-//   const BlankPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Colors.blue,
-//         title: const Text('Blank Page'),
-//       ),
-//       body: Center(
-//         child: Text(
-//           'This is a blank page',
-//           style: TextStyle(fontSize: 24, color: Colors.blueAccent),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
