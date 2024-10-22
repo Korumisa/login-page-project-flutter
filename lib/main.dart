@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'blank_page.dart';
 import 'forgot_password.dart';
-import 'register_user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,21 +8,20 @@ void main() {
 
 class User {
   final String email;
-  final String password;
+  String password;
 
   User({required this.email, required this.password});
 
-  User copyWith({String? email, String? password}) {
-    return User(
-      email: email ?? this.email,
-      password: password ?? this.password,
-    );
+  User copyWith({String? password}) {
+    return User(email: email, password: password ?? this.password);
   }
 }
 
+
 class LoginService {
   final List<User> _users = [
-    // Add existing users here
+    User(email: 'user@example.com', password: '123456'),
+    // Add more users here
   ];
 
   Future<bool> login(String email, String password) async {
@@ -31,35 +29,15 @@ class LoginService {
     return _users.any((user) => user.email == email && user.password == password);
   }
 
-  Future<bool> register(String email, String password) async {
-    await Future.delayed(const Duration(seconds: 1)); // Simulate a delay
-    if (_users.any((user) => user.email == email)) {
-      return false; // Email already exists
-    }
-    _users.add(User(email: email, password: password));
-    return true; // Registration successful
-  }
-
   Future<bool> resetPassword(String email, String newPassword) async {
     await Future.delayed(const Duration(seconds: 1)); // Simulate a delay
-    for (var i = 0; i < _users.length; i++) {
-      if (_users[i].email == email) {
-        _users[i] = _users[i].copyWith(password: newPassword); // Update the password
+    for (var user in _users) {
+      if (user.email == email) {
+        user.password = newPassword; // Update the password
         return true;
       }
     }
     return false; // Email not found
-  }
-
-  Future<bool> changePassword(String email, String oldPassword, String newPassword) async {
-    await Future.delayed(const Duration(seconds: 1)); // Simulate a delay
-    for (var i = 0; i < _users.length; i++) {
-      if (_users[i].email == email && _users[i].password == oldPassword) {
-        _users[i] = _users[i].copyWith(password: newPassword); // Update the password
-        return true;
-      }
-    }
-    return false; // Email or old password not found
   }
 }
 
@@ -141,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
               Center(
                 child: Container(
-                  width: 400,
+                  width: 400, // Set the maximum width to 400 pixels
                   child: TextFormField(
                     controller: _passwordController,
                     obscureText: true,
@@ -159,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
-                      } else if (value.length < 8) {
+                      } else if (value.length < 1) {
                         return 'Password must be at least 8 characters';
                       }
                       return null;
@@ -175,13 +153,13 @@ class _LoginPageState extends State<LoginPage> {
                     final password = _passwordController.text;
                     final isLoggedIn = await _loginService.login(email, password);
                     if (isLoggedIn) {
-                      ScaffoldMessenger.of(context ).showSnackBar(
-                        const SnackBar(content: Text('Login successful')),
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyHomePage()),
                       );
-                      // Navigate to the home page
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Login failed')),
+                        const SnackBar(content: Text('Invalid email or password')),
                       );
                     }
                   }
@@ -210,21 +188,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: const Text(
                   'Forgot Password?',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-              const SizedBox(height: 10),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const RegisterPage()),
-                  );
-                },
-                style: TextButton.styleFrom(
-                ),
-                child: const Text(
-                  'Don\'t have an account? Register',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
