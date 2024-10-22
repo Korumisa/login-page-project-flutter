@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'history.dart';
 
-class BlankPage extends StatelessWidget {
-  const BlankPage({super.key});
+class Menu extends StatelessWidget {
+  const Menu({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: const Text('Our History'),
+        title: const Text('Our Menu'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
