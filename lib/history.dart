@@ -33,61 +33,99 @@ class History extends StatelessWidget {
           ),
         ],
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: 0.75,
-        padding: const EdgeInsets.all(8.0),
-        children: List.generate(4, (index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DetailPage(index: index)),
-                );
-              },
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                elevation: 4,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
-                      child: Image.asset(
-                        'assets/MM.jpg',
-                        height: 150,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Worldwide Company',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 14, color: Colors.black54),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          // Set card dimensions to be smaller
+          double cardHeight = 25; // Set card height
+          double cardWidth = 50;  // Set card width
+
+          // List of cards with different content
+          final List<Map<String, String>> cardData = [
+            {
+              'title': 'Worldwide Company',
+              'description': 'Leading global supplier of various products.',
+              'image': 'assets/MM1.jpg',
+            },
+            {
+              'title': 'Innovative Solutions',
+              'description': 'Pioneering new technologies for the future.',
+              'image': 'assets/MM2.jpg',
+            },
+            {
+              'title': 'Customer Satisfaction',
+              'description': 'Committed to providing the best customer service.',
+              'image': 'assets/MM3.jpg',
+            },
+            {
+              'title': 'Sustainable Practices',
+              'description': 'Implementing eco-friendly methods in our operations.',
+              'image': 'assets/MM4.jpg',
+            },
+          ];
+
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // Number of cards in a row
+              childAspectRatio: cardWidth / cardHeight, // Aspect ratio of the cards
             ),
+            padding: const EdgeInsets.all(8.0),
+            itemCount: cardData.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DetailPage(index: index)),
+                    );
+                  },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    elevation: 4,
+                    child: Container(
+                      width: cardWidth,
+                      height: cardHeight,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Image.asset(
+                              cardData[index]['image']!, // Get image from data
+                              height: 60, // Set image height
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(height: 4), // Space between image and title
+                          Text(
+                            cardData[index]['title']!, // Get title from data
+                            style: const TextStyle(
+                              fontSize: 28, // Set title font size
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 2), // Space between title and description
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Text(
+                              cardData[index]['description']!, // Get description from data
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 20, color: Colors.black54), // Set description font size
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
           );
-        }),
+        },
       ),
     );
   }
