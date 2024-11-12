@@ -96,12 +96,31 @@ class DetailPage extends StatelessWidget {
                         color: Colors.blue[800], // Dark blue for section titles
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 16),
                     ...List.generate(3, (featureIndex) => 
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Text(
                           'Feature ${featureIndex + 1}: Detailed description of feature goes here.',
+                          style: TextStyle(fontSize: 16, color: Colors.black54),
+                        ),
+                      )
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Harga:',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue[800], // Dark blue for section titles
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    ...List.generate(3, (featureIndex) => 
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Text(
+                          'Harga ${featureIndex + 1}: [Your Price Here]', 
                           style: TextStyle(fontSize: 16, color: Colors.black54),
                         ),
                       )

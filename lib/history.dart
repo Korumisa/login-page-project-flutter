@@ -104,7 +104,7 @@ class History extends StatelessWidget {
                           Text(
                             cardData[index]['title']!, // Get title from data
                             style: const TextStyle(
-                              fontSize: 28, // Set title font size
+                              fontSize: 24, // Set title font size
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -114,7 +114,7 @@ class History extends StatelessWidget {
                             child: Text(
                               cardData[index]['description']!, // Get description from data
                               textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 20, color: Colors.black54), // Set description font size
+                              style: const TextStyle(fontSize: 15, color: Colors.black54), // Set description font size
                             ),
                           ),
                         ],
